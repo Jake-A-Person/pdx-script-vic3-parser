@@ -11,4 +11,4 @@ class Scope:
         self._name = name
         self.start_search()
     def start_search(self):
-        print("hiiiiiiiiiii")
+        print(self._script)
