@@ -1,0 +1,406 @@
+﻿
+je_sick_us = {
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	
+   group = je_group_internal_affairs
+
+   immediate = {
+	set_variable = {
+		name = sick_us_var
+		value = 0
+	}
+   }
+   
+	possible = {
+	}
+
+	complete = {
+		has_technology_researched = pan-nationalism	
+	}
+
+	fail = {
+		custom_tooltip = {
+			text = je_us_failure_tt
+			var:sick_us_var >= 3
+		}
+	}
+
+	on_fail = {
+		
+		every_subject_or_below = {
+			make_independent = yes
+		}
+		remove_modifier = shell_of_us
+	}
+	
+	on_complete = {
+		remove_modifier = shell_of_us
+	}
+	
+	current_value = {
+		value = var:sick_us_var
+	}
+
+	goal_add_value = {
+		add = 3
+	}
+
+	progressbar = yes
+
+	weight = 10000
+}
+
+je_sick_us_mexcio = {
+icon = "gfx/interface/icons/event_icons/event_election.dds"
+	
+   group = je_group_internal_affairs
+   
+	possible = {
+	}
+
+	immediate = {
+	}
+
+	complete = {
+		AND = {
+			is_at_war = no
+			is_diplomatic_play_committed_participant = no
+			
+			OR = {
+				NOT = {exists = c:LOU}
+				c:LOU = { overlord = c:WAH }
+			}
+			OR = {
+				NOT = {exists = c:MIS}
+				c:MIS = { overlord = c:WAH }
+			}	
+			}
+	}
+
+	fail = {
+		AND = {
+		is_at_war = no
+		is_diplomatic_play_committed_participant = no
+		
+		AND = {
+			exists = c:LOU
+			c:LOU = { overlord = c:MEX }
+		}
+		AND = {
+			exists = c:MIS
+			c:MIS = { overlord = c:MEX }
+		}
+		}
+	}
+
+	
+	on_complete = {
+		if = {
+			limit = {NOT = {exists = c:LOU}}
+			c:LOL = {change_tag = LOU}
+		}
+		if = {
+			limit = {NOT = {exists = c:MIS}}
+			c:MIL = {change_tag = MIS}
+		}
+	}
+
+	on_fail = {
+		change_variable = {
+			name = sick_us_var
+			add = 1
+		}
+		
+		c:LOL = {add_journal_entry = {type = je_home_land_lol}}
+		c:MIL = {add_journal_entry = {type = je_home_land_mil}}
+		c:MIS = {
+			remove_modifier = union_with_mexico
+		}
+		c:LOU = {
+			remove_modifier = union_with_mexico
+		}
+	}
+	
+	on_timeout = {
+
+	}
+
+
+	weight = 10000
+}
+
+je_sick_us_spain = {
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	
+   group = je_group_internal_affairs
+   
+	possible = {
+	}
+
+	immediate = {
+	}
+	complete = {
+		OR = {
+			custom_tooltip = {
+				text = je_sick_us_spain_comp
+				NOT = {c:SPA = { has_claim = s:STATE_FLORIDA }}
+			}
+			owns_entire_state_region = STATE_FLORIDA
+		}
+
+	}
+	fail = {
+		OR = {
+			custom_tooltip = {
+				text = je_sick_us_spain_fail
+				NOT = {has_claim = s:STATE_FLORIDA}
+			}
+			c:SPA = {owns_entire_state_region = STATE_FLORIDA}
+		}
+	}
+	on_fail = {
+		change_variable = {
+			name = sick_us_var
+			add = 1
+		}
+	}
+}
+
+je_sick_us_federal_law = {
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	
+   group = je_group_internal_affairs
+   
+	possible = {
+	}
+
+	immediate = {	
+		root = {save_scope_as = federal_overlord}
+	}
+
+	complete = {
+		OR = {
+			exists = c:USA
+			var:sick_us_var >= 3	
+		}
+	}
+
+	on_complete = {
+	}
+
+	fail = {
+	}
+
+	on_fail = {
+	}
+
+
+	
+	scripted_button = je_sick_us_federal_law_dop_oli_sb
+	scripted_button = je_sick_us_federal_law_dop_land_sb
+	scripted_button = je_sick_us_federal_law_dop_wel_sb
+	scripted_button = je_sick_us_federal_law_dop_suf_sb
+
+	
+	scripted_button = sick_us_federal_law_cit_ethno_sb
+	scripted_button = sick_us_federal_law_cit_nat_sb
+	scripted_button = sick_us_federal_law_cit_seg_sb
+	scripted_button = sick_us_federal_law_cit_cult_sb
+
+
+	
+	scripted_button = sick_us_federal_law_land_sef_sb
+	scripted_button = sick_us_federal_law_land_ten_sb
+	scripted_button = sick_us_federal_law_land_com_sb
+	scripted_button = sick_us_federal_law_land_home_sb
+	
+	
+	scripted_button = sick_us_federal_law_econ_bad_sb
+	scripted_button = sick_us_federal_law_econ_int_sb
+	scripted_button = sick_us_federal_law_econ_laz_sb
+
+	
+	scripted_button = je_sick_us_federal_law_slave_ban_sb
+	scripted_button = je_sick_us_federal_law_slave_allow_sb
+
+
+
+	on_monthly_pulse = {
+		effect = {
+			remove_variable = sick_us_federal_law_slave_ban
+			remove_variable = sick_us_federal_law_slave_allow
+
+			if = {
+				limit = {	has_law = law_type:law_slavery_banned	}
+				set_variable = sick_us_federal_law_slave_ban
+			}
+			else = {
+				set_variable = sick_us_federal_law_slave_allow
+		}
+		}
+	}
+}
+
+je_civil_war_start = {
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	
+	group = je_group_internal_affairs
+	
+
+	is_shown_when_inactive = {
+		not = {
+			has_modifier = civil_war_nation
+		}
+		any_subject_or_below = {
+			has_modifier = civil_war_nation
+			count > 0
+		}
+	}
+
+	possible = {
+		not = {
+			has_modifier = civil_war_nation
+		}
+		any_subject_or_below = {
+			has_modifier = civil_war_nation
+			count > 0
+		}
+	}
+
+	immediate = {	
+		
+	}
+
+	timeout = 42 
+
+	on_timeout = {
+		if = {
+			limit = {
+				any_subject_or_below = {
+					has_modifier = civil_war_nation
+					is_player = yes
+				}
+			}
+			random_subject_or_below = {
+				limit = {
+					has_modifier = civil_war_nation
+					is_player = yes
+				}
+				save_scope_as = civil_war_usa_free_leader
+			}
+		}
+		else = {
+			ordered_subject_or_below = {
+				limit = {
+					has_modifier = civil_war_nation
+				}
+				order_by = gdp
+				save_scope_as = civil_war_usa_free_leader
+			}
+		}
+
+		scope:civil_war_usa_free_leader = {
+			make_independent = yes
+		}
+
+		every_subject_or_below = {
+			limit = {
+				has_modifier = civil_war_nation
+				not = {scope:civil_war_usa_free_leader=this}
+			}
+			make_independent = yes
+			scope:civil_war_usa_free_leader = {
+				create_diplomatic_pact = {
+					country = prev
+					type = puppet
+				}
+			}
+		}
+
+		create_diplomatic_play = {
+			type = dp_make_protectorate
+			target_country = scope:civil_war_usa_free_leader
+		}
+		add_journal_entry = {
+			type = je_civil_war_end
+		}
+	}
+}
+
+je_civil_war_end = {
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	
+	group = je_group_internal_affairs
+	
+
+	possible = {
+
+	}
+
+	immediate = {	
+		random_country = {
+			limit = {
+				is_diplomatic_play_committed_participant = yes
+				is_diplomatic_play_enemy_of = root
+				or = {
+					country_has_primary_culture = cu:yankee
+					country_has_primary_culture = cu:dixie
+				}
+				is_diplomatic_play_target = yes
+			}
+		save_scope_as = civil_war_usa_free_leader
+		}
+
+	}
+
+	complete = {
+		is_at_war = no
+		is_diplomatic_play_committed_participant = no
+		
+		
+		
+		scope:civil_war_usa_free_leader ?= {
+				is_subject_of = prev
+		}
+	}
+
+	fail = {
+		is_at_war = no
+		is_diplomatic_play_committed_participant = no
+		not = {
+			scope:civil_war_usa_free_leader ?= {
+				is_subject_of = prev
+			}
+		}
+	}
+
+	on_fail = {
+		change_variable = {
+			name = sick_us_var
+			add = 1
+		}
+		every_country = {
+			limit = {
+				has_modifier = civil_war_nation
+			}
+			remove_modifier = civil_war_nation
+		}
+	}
+
+	on_complete = {
+		every_country = {
+				limit = {
+					has_modifier = civil_war_nation
+				}
+				remove_modifier = civil_war_nation
+				make_independent = yes
+				root = {
+					create_diplomatic_pact = {
+						country = prev
+						type = puppet
+					}
+				}
+				copy_laws = root
+			}
+	}
+}
