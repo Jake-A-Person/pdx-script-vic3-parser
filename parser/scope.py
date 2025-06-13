@@ -21,7 +21,7 @@ class Scope(object):
         while self._index < len(self._script):
             #if this char is a space or new line then go to next char
             #if expression hasn't started yet
-            if self._script[self._index] == " " or self._script[self._index] == "\n":
+            if self._script[self._index] == " " or self._script[self._index] == "\n" or self._script[self._index] == "\t":
                 self._index += 1
             elif self._script[self._index] == "}":
                 #TODO change scope
@@ -48,7 +48,7 @@ class Scope(object):
                 self._index += 1
                 break
         while self._index < len(self._script):
-            if self._script[self._index] == " " or self._script[self._index] == "\n":
+            if self._script[self._index] == " " or self._script[self._index] == "\n" or self._script[self._index] == "\t":
                 self._index += 1
             else:
                 self.parse_end_exp(property_str)
@@ -60,7 +60,7 @@ class Scope(object):
         else:
             value: str = ""
             while self._index < len(self._script):
-                if self._script[self._index] == " " or self._script[self._index] == "\n":
+                if self._script[self._index] == " " or self._script[self._index] == "\n" or self._script[self._index] == "\t":
                     stat = Statement(property_str,value)
                     self._statements.append(stat)
                     self._index += 1
