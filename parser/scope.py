@@ -10,13 +10,7 @@ class Scope(object):
         self._index = index
         self._name = name
         self.parse_space_start_exp()
-    def start_search(self):
-        pass
-        # while self._index < len(self._script):
-        #     if self._script[self._index] == " " or self._script[self._index] == "\n":
-        #         self._index += 1
-        #         continue
-        #     elif self._script[self._index] == :
+
     def parse_space_start_exp(self):
         while self._index < len(self._script):
             #if this char is a space or new line then go to next char
@@ -28,49 +22,66 @@ class Scope(object):
                 self._index += 1
             else:
                 self.parse_start_exp()
+
     def parse_start_exp(self):
         property_str: str = ""
         while self._index < len(self._script):
             #if this char is a space or new line or = then go to next char
             #if left side of the expression has finished
             if self._script[self._index] == " " or self._script[self._index] == "\n" or self._script[self._index] == "=":
+               #parse the assignment operator
                self.parse_space_mid_exp(property_str)
-               break
+               #go back to parse_space_start_exp
+               return
             else:
+                #add the current char on to the name of the property (left side of the statement)
                 property_str += self._script[self._index]
                 self._index += 1
+
     def parse_space_mid_exp(self,property_str:str):
+        #looping to the assignment from the left
         while self._index < len(self._script):
             #if not the assignment operator loop
             if self._script[self._index] != "=":
                 self._index += 1
             else:
+                #if it is the assignment operator go to the next char and exit the loop
                 self._index += 1
                 break
+        # looping to the value or scope operator ({) from the operator
         while self._index < len(self._script):
+            #if it is not par of the value or a scope operator ({) no to next char
             if self._script[self._index] == " " or self._script[self._index] == "\n" or self._script[self._index] == "\t":
                 self._index += 1
             else:
                 self.parse_end_exp(property_str)
-                break
+                #go back to parse_start_exp which goes back to parse_space_start_exp
+                return
+
     def parse_end_exp(self,property_str:str):
+        #if it is the scope operator ({) change scope
         if self._script[self._index] == "{":
             #TODO change scope
             self._index += 1
         else:
+            #is a value so parse it
             value: str = ""
             while self._index < len(self._script):
+                #if it is the end if the value
                 if self._script[self._index] == " " or self._script[self._index] == "\n" or self._script[self._index] == "\t":
+                    #create a new statement using the property and value parsed and it to the list fo statements
                     stat = Statement(property_str,value)
                     self._statements.append(stat)
                     self._index += 1
-                    break
+                    # go back to parse_start_exp which goes back to parse_space_start_exp
+                    return
                 else:
                     value += self._script[self._index]
                     self._index += 1
 
     def get_statements(self) -> list[Statement]:
         return self._statements
+
     def get_name(self) -> str:
         return self._name
 
