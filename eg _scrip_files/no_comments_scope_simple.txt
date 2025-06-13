@@ -1,0 +1,16 @@
+﻿
+je_sick_us = {
+	icon = "gfx/interface/icons/event_icons/event_election.dds"
+	
+   group = je_group_internal_affairs
+
+   immediate = {
+	set_variable = {
+		name = sick_us_var
+		value = 0
+	}
+   }
+   
+	possible = {
+	}
+}
