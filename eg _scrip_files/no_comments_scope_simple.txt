@@ -14,3 +14,7 @@ je_sick_us = {
 	possible = {
 	}
 }
+
+je_hi = {
+    hi = "heyyy"
+}
