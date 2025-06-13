@@ -23,6 +23,9 @@ class Scope(object):
             #if expression hasn't started yet
             if self._script[self._index] == " " or self._script[self._index] == "\n":
                 self._index += 1
+            elif self._script[self._index] == "}":
+                #TODO change scope
+                self._index += 1
             else:
                 self.parse_start_exp()
     def parse_start_exp(self):
@@ -52,6 +55,7 @@ class Scope(object):
                 break
     def parse_end_exp(self,property_str:str):
         if self._script[self._index] == "{":
+            #TODO change scope
             self._index += 1
         else:
             value: str = ""
@@ -65,5 +69,7 @@ class Scope(object):
                     value += self._script[self._index]
                     self._index += 1
     def __str__(self):
-        str1 = [{str(i)} for i in self._statements]
-        return str(str1) + str(len(self._statements))
+        str1 = [str(i) for i in self._statements]
+        #puts each of the statements on to a new line
+        str2 = "\n".join(str1)
+        return str(str2) + "\n" + str(len(self._statements))
