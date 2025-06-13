@@ -1,16 +1,8 @@
 ﻿icon = "gfx/interface/icons/event_icons/event_election.dds"
-
 group = je_group_internal_affairs
 
-name = sick_us_var
-value = 0
-
-
-has_technology_researched = pan-nationalism
-
-
-
-text = je_us_failure_tt
+name = sick_us_var value = 0
+ has_technology_researched = pan-nationalism	text = je_us_failure_tt
 var:sick_us_var >= 3
 
 make_independent = yes
