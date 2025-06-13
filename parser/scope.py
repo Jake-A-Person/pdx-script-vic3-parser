@@ -94,6 +94,9 @@ class Scope(object):
     def get_name(self) -> str:
         return self._name
 
+    def get_scopes(self) -> list:
+        return self._scopes
+
     def __str__(self):
         str1 = [str(i) for i in self._statements]
         #puts each of the statements on to a new line
