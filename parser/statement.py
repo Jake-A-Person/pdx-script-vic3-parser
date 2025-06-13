@@ -8,5 +8,12 @@ class Statement(object):
         return self._property
     def get_value(self):
         return self._value
+    def __eq__(self,other):
+        #only compare with same type
+        if not isinstance(other, Statement):
+            return NotImplemented
+        else:
+            return self._value == other._value and self._property == other._property
+
     def __str__(self):
         return f"{{{self._property} : {self._value}}}"
