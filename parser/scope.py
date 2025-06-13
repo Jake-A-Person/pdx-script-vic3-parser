@@ -1,8 +1,8 @@
-from Statement import Statement
+from .statement import Statement
 
 class Scope(object):
     _name: str
-    _statements: list = list()
+    _statements: list[Statement] = list()
     _script: str
     _index:int
     def __init__(self, script: str,index:int = 0, name:str = "this"):
@@ -68,6 +68,12 @@ class Scope(object):
                 else:
                     value += self._script[self._index]
                     self._index += 1
+
+    def get_statements(self) -> list[Statement]:
+        return self._statements
+    def get_name(self) -> str:
+        return self._name
+
     def __str__(self):
         str1 = [str(i) for i in self._statements]
         #puts each of the statements on to a new line
