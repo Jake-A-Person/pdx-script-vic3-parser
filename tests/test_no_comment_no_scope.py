@@ -6,10 +6,10 @@ from parser.statement import *
 
 class TestNoCommentNoScope(unittest.TestCase):
     _scope:Scope
-    def setUp(self):
-        script = open("../eg _scrip_files/no_scope_change_no_comments.txt", "r", encoding="utf-8-sig", newline="\n")
-        self._scope = Scope(script.read())
-        script.close()
+    script = open("../eg _scrip_files/no_scope_change_no_comments.txt", "r", encoding="utf-8-sig", newline="\n")
+    _scope = Scope(script.read())
+    script.close()
+
     def test_first_statement(self):
         self.assertEqual(self._scope.get_statements()[0], Statement("icon","\"gfx/interface/icons/event_icons/event_election.dds\""))
     def test_sep_new_line(self):
