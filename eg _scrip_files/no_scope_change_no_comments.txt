@@ -1,0 +1,75 @@
+﻿icon = "gfx/interface/icons/event_icons/event_election.dds"
+
+group = je_group_internal_affairs
+
+name = sick_us_var
+value = 0
+
+
+has_technology_researched = pan-nationalism
+
+
+
+text = je_us_failure_tt
+var:sick_us_var >= 3
+
+make_independent = yes
+remove_modifier = shell_of_us
+
+remove_modifier = shell_of_us
+
+value = var:sick_us_var
+
+add = 3
+
+progressbar = yes
+
+weight = 10000
+
+icon = "gfx/interface/icons/event_icons/event_election.dds"
+
+group = je_group_internal_affairs
+
+is_at_war = no
+is_diplomatic_play_committed_participant = no
+
+is_at_war = no
+is_diplomatic_play_committed_participant = no
+
+exists = c:LOU
+
+
+exists = c:MIS
+
+
+weight = 10000
+
+
+icon = "gfx/interface/icons/event_icons/event_election.dds"
+
+group = je_group_internal_affairs
+
+
+
+scripted_button = je_sick_us_federal_law_dop_oli_sb
+scripted_button = je_sick_us_federal_law_dop_land_sb
+scripted_button = je_sick_us_federal_law_dop_wel_sb
+scripted_button = je_sick_us_federal_law_dop_suf_sb
+
+scripted_button = sick_us_federal_law_cit_ethno_sb
+scripted_button = sick_us_federal_law_cit_nat_sb
+scripted_button = sick_us_federal_law_cit_seg_sb
+scripted_button = sick_us_federal_law_cit_cult_sb
+
+
+scripted_button = sick_us_federal_law_land_sef_sb
+scripted_button = sick_us_federal_law_land_ten_sb
+scripted_button = sick_us_federal_law_land_com_sb
+scripted_button = sick_us_federal_law_land_home_sb
+
+scripted_button = sick_us_federal_law_econ_bad_sb
+scripted_button = sick_us_federal_law_econ_int_sb
+scripted_button = sick_us_federal_law_econ_laz_sb
+
+scripted_button = je_sick_us_federal_law_slave_ban_sb
+scripted_button = je_sick_us_federal_law_slave_allow_sb
