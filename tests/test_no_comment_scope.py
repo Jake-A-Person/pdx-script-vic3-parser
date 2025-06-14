@@ -6,7 +6,7 @@ from parser.statement import *
 
 class TestNoCommentScope(unittest.TestCase):
     scope1:Scope
-    script = open("../eg _scrip_files/no_comments_scope_simple.txt", "r", encoding="utf-8-sig", newline="\n")
+    script = open("../eg_scrip_files/no_comments_scope_simple.txt", "r", encoding="utf-8-sig", newline="\n")
     scope1 = Scope(script.read())
     script.close()
 
