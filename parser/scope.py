@@ -7,9 +7,10 @@ class IntWrap(object):
         self.val = val
 
 class Scope(object):
-    def __init__(self, script: str, index:IntWrap = IntWrap(0), name:str = "this"):
+    def __init__(self, script: str, index:IntWrap = None, name:str = "this"):
         self._script = script
-        self._index = index
+        #if no index is given then default to 0
+        self._index = index if index is not None else IntWrap(0)
         self._name = name
         self._statements = list()
         self._scopes = list()
