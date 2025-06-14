@@ -1,20 +1,18 @@
+from copy import copy
+
 from .statement import Statement
 
-class int_wrap(object):
-    val: int
+class IntWrap(object):
     def __init__(self, val):
         self.val = val
 
 class Scope(object):
-    _name: str
-    _statements: list[Statement] = list()
-    _script: str
-    _scopes: list = list()
-    _index:int_wrap
-    def __init__(self, script: str,index:int_wrap = int_wrap(0), name:str = "this"):
+    def __init__(self, script: str, index:IntWrap = IntWrap(0), name:str = "this"):
         self._script = script
         self._index = index
         self._name = name
+        self._statements = list()
+        self._scopes = list()
         self.parse_space_start_exp()
 
     def parse_space_start_exp(self):
@@ -68,7 +66,6 @@ class Scope(object):
     def parse_end_exp(self,property_str:str):
         #if it is the scope operator ({) change scope
         if self._script[self._index.val] == "{":
-            #TODO change scope
             self._index.val += 1
             self._scopes.append(Scope(self._script,self._index,property_str))
             return
