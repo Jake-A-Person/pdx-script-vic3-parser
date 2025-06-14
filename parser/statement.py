@@ -16,4 +16,4 @@ class Statement(object):
             return self._value == other._value and self._property == other._property
 
     def __str__(self):
-        return f"{{{self._property} : {self._value}}}"
+        return f"{self._property} = {self._value}"
