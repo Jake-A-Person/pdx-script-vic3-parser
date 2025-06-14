@@ -18,6 +18,7 @@ class Scope(object):
 
     def parse_space_start_exp(self):
         while self._index.val < len(self._script):
+            self.check_for_comment()
             #if this char is a space or new line then go to next char
             #if expression hasn't started yet
             if self._script[self._index.val] == " " or self._script[self._index.val] == "\n" or self._script[self._index.val] == "\t":
@@ -32,6 +33,7 @@ class Scope(object):
     def parse_start_exp(self):
         property_str: str = ""
         while self._index.val < len(self._script):
+            self.check_for_comment()
             #if this char is a space or new line or = then go to next char
             #if left side of the expression has finished
             if self._script[self._index.val] == " " or self._script[self._index.val] == "\n" or self._script[self._index.val] == "=":
@@ -47,6 +49,7 @@ class Scope(object):
     def parse_space_mid_exp(self,property_str:str):
         #looping to the assignment from the left
         while self._index.val < len(self._script):
+            self.check_for_comment()
             #if not the assignment operator loop
             if self._script[self._index.val] != "=":
                 self._index.val += 1
@@ -56,6 +59,7 @@ class Scope(object):
                 break
         # looping to the value or scope operator ({) from the operator
         while self._index.val < len(self._script):
+            self.check_for_comment()
             #if it is not par of the value or a scope operator ({) no to next char
             if self._script[self._index.val] == " " or self._script[self._index.val] == "\n" or self._script[self._index.val] == "\t":
                 self._index.val += 1
@@ -74,6 +78,7 @@ class Scope(object):
             #is a value so parse it
             value: str = ""
             while self._index.val < len(self._script):
+                self.check_for_comment()
                 #if it is the end if the value
                 if self._script[self._index.val] == " " or self._script[self._index.val] == "\n" or self._script[self._index.val] == "\t":
                     #create a new statement using the property and value parsed and it to the list fo statements
@@ -85,6 +90,13 @@ class Scope(object):
                 else:
                     value += self._script[self._index.val]
                     self._index.val += 1
+
+    def check_for_comment(self):
+        #if it is the start of a comment
+        if self._script[self._index.val] == "#":
+            #loop until the end of the comment
+            while self._index.val < len(self._script) and self._script[self._index.val] != "\n":
+                self._index.val += 1
 
     def get_statements(self) -> list[Statement]:
         return self._statements
