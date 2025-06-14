@@ -1,3 +1,4 @@
+from os import linesep as os_linesep
 from copy import copy
 
 from .statement import Statement
@@ -107,8 +108,15 @@ class Scope(object):
     def get_scopes(self) -> list:
         return self._scopes
 
+    def to_pdx_script(self, indent_char:str="\t", new_line_char:str="\n", indentation_level:int = 0 ) -> str:
+        return_str:str = indent_char*indentation_level + self._name + " = {" + new_line_char
+        for stat in self._statements:
+            return_str += (indentation_level+1)*indent_char + str(stat) + new_line_char
+        for scope in self._scopes:
+            return_str += scope.to_pdx_script(indentation_level=indentation_level + 1) + new_line_char
+        return return_str + indent_char*indentation_level + "}"
+        #for scope in self._scopes:
+
+
     def __str__(self):
-        str1 = [str(i) for i in self._statements]
-        #puts each of the statements on to a new line
-        str2 = "\n".join(str1)
-        return str(str2) + "\n" + str(len(self._statements))
+        return self.to_pdx_script("   ",os_linesep)
