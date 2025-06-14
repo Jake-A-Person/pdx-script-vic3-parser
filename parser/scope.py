@@ -88,6 +88,11 @@ class Scope(object):
                     self._index.val += 1
                     # go back to parse_start_exp which goes back to parse_space_start_exp
                     return
+                #if it is closing the current scope
+                if self._script[self._index.val] == "}":
+                    stat = Statement(property_str,value)
+                    self._statements.append(stat)
+                    return
                 else:
                     value += self._script[self._index.val]
                     self._index.val += 1
