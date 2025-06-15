@@ -9,7 +9,7 @@ class Statement(object):
     i.e. make_independent = yes
     A statement can have any number of: spaces, new lines or tabs separating the property operator and value
 
-    Is used by the Scope
+    Is used by the Scope class
     """
     _property: str
     _value: str
