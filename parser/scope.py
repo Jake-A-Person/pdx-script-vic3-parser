@@ -52,10 +52,12 @@ class Scope(object):
         while self._index.val < len(self._script):
             self.check_for_comment()
             #if not the assignment operator loop
-            if self._script[self._index.val] != "=":
+            if self._script[self._index.val] != "=" and self._script[self._index.val] != ">" and self._script[self._index.val] != "<":
                 self._index.val += 1
             else:
-                #if it is the assignment operator go to the next char and exit the loop
+                if (self._script[self._index.val] == ">" or self._script[self._index.val] == "<") and self._script[self._index.val+1] == "=":
+                    self._index.val += 1
+                # if it is the assignment operator go to the next char and exit the loop
                 self._index.val += 1
                 break
         # looping to the value or scope operator ({) from the operator
