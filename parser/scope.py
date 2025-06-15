@@ -161,7 +161,7 @@ class Scope(object):
         :param stat: The statement to add
         :type stat: Statement
         """
-        self._scopes.append(stat)
+        self._statements.append(stat)
 
     def remove_statement(self, stat: Statement):
         """
