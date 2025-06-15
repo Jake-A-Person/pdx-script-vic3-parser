@@ -1,9 +1,12 @@
+from enum import Enum
+
 class Statement(object):
     _property: str
     _value: str
-    def __init__(self, property_str:str, value_str:str):
+    def __init__(self, property_str:str, value_str:str, operator:str):
         self._property = property_str
         self._value = value_str
+        self._operator = operator
     def get_property(self):
         return self._property
     def get_value(self):
@@ -15,6 +18,12 @@ class Statement(object):
     def set_value(self, value:str):
         self._value = value
 
+    def set_operator(self, operator:str):
+        self._operator = operator
+
+    def get_operator(self):
+        return self._operator
+
     def __eq__(self,other):
         #only compare with same type
         if not isinstance(other, Statement):
@@ -23,4 +32,4 @@ class Statement(object):
             return self._value == other._value and self._property == other._property
 
     def __str__(self):
-        return f"{self._property} = {self._value}"
+        return f"{self._property} {self._operator} {self._value}"

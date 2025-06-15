@@ -48,15 +48,18 @@ class Scope(object):
                 self._index.val += 1
 
     def parse_space_mid_exp(self,property_str:str):
+        operator: str = ""
         #looping to the assignment from the left
         while self._index.val < len(self._script):
             self.check_for_comment()
             #if not the assignment operator loop
             if self._script[self._index.val] != "=" and self._script[self._index.val] != ">" and self._script[self._index.val] != "<":
                 self._index.val += 1
+                operator = self._script[self._index.val]
             else:
                 if (self._script[self._index.val] == ">" or self._script[self._index.val] == "<") and self._script[self._index.val+1] == "=":
                     self._index.val += 1
+                    operator += self._script[self._index.val]
                 # if it is the assignment operator go to the next char and exit the loop
                 self._index.val += 1
                 break
@@ -67,11 +70,11 @@ class Scope(object):
             if self._script[self._index.val] == " " or self._script[self._index.val] == "\n" or self._script[self._index.val] == "\t":
                 self._index.val += 1
             else:
-                self.parse_end_exp(property_str)
+                self.parse_end_exp(property_str,operator)
                 #go back to parse_start_exp which goes back to parse_space_start_exp
                 return
 
-    def parse_end_exp(self,property_str:str):
+    def parse_end_exp(self,property_str:str,operator:str):
         #if it is the scope operator ({) change scope
         if self._script[self._index.val] == "{":
             self._index.val += 1
@@ -85,14 +88,14 @@ class Scope(object):
                 #if it is the end if the value
                 if self._script[self._index.val] == " " or self._script[self._index.val] == "\n" or self._script[self._index.val] == "\t":
                     #create a new statement using the property and value parsed and it to the list fo statements
-                    stat = Statement(property_str,value)
+                    stat = Statement(property_str,value,operator)
                     self._statements.append(stat)
                     self._index.val += 1
                     # go back to parse_start_exp which goes back to parse_space_start_exp
                     return
                 #if it is closing the current scope
                 if self._script[self._index.val] == "}":
-                    stat = Statement(property_str,value)
+                    stat = Statement(property_str,value,operator)
                     self._statements.append(stat)
                     return
                 else:
