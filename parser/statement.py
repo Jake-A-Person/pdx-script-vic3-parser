@@ -8,6 +8,13 @@ class Statement(object):
         return self._property
     def get_value(self):
         return self._value
+
+    def set_property(self, property_str:str):
+        self._property = property_str
+
+    def set_value(self, value:str):
+        self._value = value
+
     def __eq__(self,other):
         #only compare with same type
         if not isinstance(other, Statement):

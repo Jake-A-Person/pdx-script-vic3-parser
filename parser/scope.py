@@ -115,6 +115,18 @@ class Scope(object):
     def get_scopes(self) -> list:
         return self._scopes
 
+    def add_statement(self, stat: Statement):
+        self._scopes.append(stat)
+
+    def remove_statement(self, stat: Statement):
+        self._scopes.remove(stat)
+
+    def add_scope(self, scope):
+        self._scopes.append(scope)
+
+    def remove_scope(self, scope):
+        self._scopes.remove(scope)
+
     def to_pdx_script(self, indent_char:str="\t", new_line_char:str="\n", indentation_level:int = 0 ) -> str:
         return_str:str = indent_char*indentation_level + self._name + " = {" + new_line_char
         for stat in self._statements:
