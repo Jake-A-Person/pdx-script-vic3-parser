@@ -190,6 +190,16 @@ class Scope(object):
 
         self._scopes.remove(scope)
 
+    def find_eqv_scope(self, eqv_scope):
+        if self._name == eqv_scope.get_name():
+            if len(eqv_scope.get_statements()) == 0 or all(stat in self._statements for stat in eqv_scope.get_statements()):
+                return self
+        for child_scope in self._scopes:
+            return_val = child_scope.find_eqv_scope(eqv_scope)
+            if return_val is not None:
+                return return_val
+        return None
+
     def to_pdx_script(self, indent_char:str="\t", new_line_char:str="\n", indentation_level:int = 0 ) -> str:
         """
         Translates the scope into valid pdx script
