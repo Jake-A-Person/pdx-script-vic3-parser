@@ -210,5 +210,11 @@ class Scope(object):
             return_str += scope.to_pdx_script(indentation_level=indentation_level + 1) + new_line_char
         return return_str + indent_char*indentation_level + "}"
 
+    def __eq__(self, other):
+        if not isinstance(other, Scope):
+            return NotImplemented
+        else:
+            return self._name == other._name and self._scopes == other._scopes and self._statements == other._statements
+
     def __str__(self):
         return self.to_pdx_script("   ",os_linesep)
