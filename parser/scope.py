@@ -1,15 +1,9 @@
 from os import linesep as os_linesep
 from copy import copy
 
-from .statement import Statement
+from parser.statement import Statement
+from parser.int_wrap import IntWrap
 
-class IntWrap(object):
-    """
-    A wrapper for an int
-    Used in Scope class to allow for ints to be passed by reference
-    """
-    def __init__(self, val):
-        self.val = val
 
 class Scope(object):
     """
@@ -123,6 +117,9 @@ class Scope(object):
                 else:
                     value += self._script[self._index.val]
                     self._index.val += 1
+
+    def _go_to_next_scope(self, next_scope_name:str):
+        self._scopes.append(Scope(self._script, self._index, next_scope_name))
 
     def __check_for_comment(self):
         #if it is the start of a comment
