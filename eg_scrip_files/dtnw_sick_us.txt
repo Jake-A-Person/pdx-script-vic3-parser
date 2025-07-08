@@ -164,6 +164,7 @@ dtnw_sick_us.3 = {
 
 #mexican war
 dtnw_sick_us.4 = {
+	type = country_event
 	placement = root
 	title = dtnw_sick_us.4.t
 	desc = dtnw_sick_us.4.d
