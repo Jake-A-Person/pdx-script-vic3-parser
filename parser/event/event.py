@@ -24,6 +24,8 @@ class Event(Scope):
 
         if len(find_matching_statements(self.get_statements(),"hidden","=","yes")) > 0:
             self._hidden = True
+        else:
+            self._hidden = False
             try:
                 self._placement = find_matching_statements(self.get_statements(),"placement","=")[0].get_value()
                 self._title = find_matching_statements(self.get_statements(),"title","=")[0].get_value()
@@ -32,6 +34,3 @@ class Event(Scope):
                 self._duration  = find_matching_statements(self.get_statements(),"flavor","=")[0].get_value()
             except IndexError:
                 raise PdxScriptSyntaxError(f'Event "{self._name}" is not a hidden event and does not contain all the necessary statements')
-        else:
-            self._hidden = False
-            
