@@ -81,7 +81,7 @@ class Statement(object):
         if not isinstance(other, Statement):
             return NotImplemented
         else:
-            return self._value == other._value and self._property == other._property
+            return self._value == other._value and self._property == other._property and self._operator == other._operator
 
     def __str__(self):
         return f"{self._property} {self._operator} {self._value}"
