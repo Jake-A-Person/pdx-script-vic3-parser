@@ -65,20 +65,38 @@ class Scope(object):
 
     def __parse_space_mid_exp(self, property_str:str):
         operator: str = ""
-        #looping to the assignment from the left
+        #valid operators
+        valid_single_op = ["<",">","="]
+        valid_multi_op = ["<=",">=","?="]
+        #looping to the assignment operator from the left
         while self._index.val < len(self._script):
             self.__check_for_comment()
-            #if not the assignment operator loop
-            if self._script[self._index.val] != "=" and self._script[self._index.val] != ">" and self._script[self._index.val] != "<":
-                self._index.val += 1
-                operator = self._script[self._index.val]
-            else:
-                if (self._script[self._index.val] == ">" or self._script[self._index.val] == "<") and self._script[self._index.val+1] == "=":
-                    self._index.val += 1
-                    operator += self._script[self._index.val]
-                # if it is the assignment operator go to the next char and exit the loop
-                self._index.val += 1
+            #check if the next two chars are a multi char operator
+            if (self._index.val < len(self._script) + 1) and (self._script[self._index.val:self._index.val+2] in valid_multi_op):
+                #next two chars
+                operator = self._script[self._index.val:self._index.val+2]
+                self._index.val += 2
+                #exit loop
                 break
+            #check if the next char is a single char operator
+            elif self._script[self._index.val] in valid_single_op:
+                operator = self._script[self._index.val]
+                self._index.val += 1
+                #exit loop
+                break
+            self._index.val += 1
+            #if not a assignment operator loop
+            # if self._script[self._index.val] != "=" and self._script[self._index.val] != ">" and self._script[self._index.val] != "<":
+            #     self._index.val += 1
+            # else:
+            #     #if
+            #     if (self._script[self._index.val] == ">" or self._script[self._index.val] == "<") and self._script[self._index.val+1] == "=":
+            #         operator += self._script[self._index.val] + "="
+            #         self._index.val += 1
+            #     # if it is the assignment operator or  go to the next char and exit the loop
+            #     operator += self._script[self._index.val]
+            #     self._index.val += 1
+            #     break
         # looping to the value or scope operator ({) from the operator
         while self._index.val < len(self._script):
             self.__check_for_comment()
