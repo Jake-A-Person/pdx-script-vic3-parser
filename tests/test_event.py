@@ -20,8 +20,9 @@ class TestCommentScope(unittest.TestCase):
         valid_statements = [Statement("type","country_event","=")
             ,Statement("placement","root","=")
             ,Statement("title","dtnw_sick_us.1.t","=")
-            ,Statement("desc", "=", "dtnw_sick_us.1.d")
-            ,Statement("flavor","dtnw_sick_us.1.f","=")]
+            ,Statement("desc", "dtnw_sick_us.1.d", "=")
+            ,Statement("flavor","dtnw_sick_us.1.f","=")
+            ,Statement("duration","1","=")]
         self.assertEqual(self._scope.get_scopes()[0].get_statements(),valid_statements)
     # def test_second_scope(self):
     #     self.assertEqual(self._scope.get_scopes()[1].get_name(), "je_sick_us_mexcio")
