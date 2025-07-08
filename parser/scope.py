@@ -1,5 +1,4 @@
 from os import linesep as os_linesep
-from copy import copy
 
 from parser.statement import Statement
 from parser.int_wrap import IntWrap

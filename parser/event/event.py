@@ -1,7 +1,5 @@
 from parser.scope import Scope
 from parser.int_wrap import IntWrap
-import parser.statement_list_search
-from parser.statement import Statement
 from parser.statement_list_search import find_matching_statements
 from parser.exceptions import PdxScriptSyntaxError
 
