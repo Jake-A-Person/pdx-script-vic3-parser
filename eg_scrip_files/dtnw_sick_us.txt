@@ -1,0 +1,1227 @@
+namespace = dtnw_sick_us
+
+#start up event w/ LORE!!!!!!!!!!!!!!!! maybe?
+dtnw_sick_us.1 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.1.t
+	desc = dtnw_sick_us.1.d
+	flavor = dtnw_sick_us.1.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.1.a
+		default_option = yes
+
+		add_journal_entry = {
+			type = je_sick_us
+		}
+		add_journal_entry = { #cut for now
+			type = je_sick_us_federal_law
+		}
+		add_journal_entry = {
+			type = je_sick_us_spain
+		}
+	}
+}
+
+#ban slaves subject event
+dtnw_sick_us.2 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_slavery_banned
+		add_liberty_desire = 40
+		change_relations = {
+			country = overlord
+			value = -40
+		}
+	}
+
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+						any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								has_law = law_type:law_slavery_banned
+							}
+					count > 2
+					}
+					}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
+
+#ban allow slaves subject event
+dtnw_sick_us.3 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_slave_trade
+	}
+	
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+					any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								or = {
+									has_law = law_type:law_slave_trade
+									has_law = law_type:law_debt_slavery
+								}
+							}
+					count > 2
+					}
+				}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
+
+#mexican war
+dtnw_sick_us.4 = {
+	placement = root
+	title = dtnw_sick_us.4.t
+	desc = dtnw_sick_us.4.d
+	flavor = dtnw_sick_us.4.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+		if = {
+			limit = { c:LOU = {	has_modifier = union_with_mexico } }
+			create_country = {
+			tag = LOL
+			origin = c:LOU
+			province = p:x13B0C7
+			}
+			c:LOL = {
+				activate_law = law_type:law_slave_trade
+			}
+			create_diplomatic_pact = {
+			country = c:LOL
+			type = protectorate
+			}
+		}
+
+		if = {
+			limit = { c:MIS = {	has_modifier = union_with_mexico } }
+			create_country = {
+			tag = MIL
+			origin = c:MIS
+			province = p:x50C080
+			}
+			c:MIS = {
+				activate_law = law_type:law_presidential_republic
+				activate_law = law_type:law_tenant_farmers
+				activate_law = law_type:law_landed_voting
+				activate_law = law_type:law_slave_trade
+			}
+			create_diplomatic_pact = {
+			country = c:MIL
+			type = protectorate
+			}
+		}
+		
+		#both
+		if = {
+			limit = { AND = {
+				c:LOU = {	has_modifier = union_with_mexico }
+				c:MIS = {	has_modifier = union_with_mexico }}  }
+		create_diplomatic_play = {
+
+			name = mex
+			type = dp_humiliation
+
+			target_country = c:MEX
+
+			war = no
+
+			add_target_backers = {
+				c:MEX
+				c:MIS
+				c:LOU
+			}
+
+			add_initiator_backers = {
+				c:WAH
+				c:MIL
+				c:LOL
+			}
+			add_war_goal = {
+				holder = c:MIS
+				type = annex_country
+				target_country = c:MIL
+			}
+			add_war_goal = {
+				holder = C:MIL
+				type = annex_country
+				target_country = c:MIS
+			}
+			add_war_goal = {
+				holder = c:LOU
+				type = annex_country
+				target_country = c:LOL
+			}
+			add_war_goal = {
+				holder = c:LOL
+				type = annex_country
+				target_country = c:LOU
+			}
+		}
+	}
+	if = {
+		limit = { AND = {
+			NOT = { c:LOU = {	has_modifier = union_with_mexico } }
+			c:MIS = {	has_modifier = union_with_mexico }}  }
+			create_diplomatic_play = {
+
+				name = mex
+				type = dp_humiliation
+	
+				target_country = c:MEX
+	
+				escalation = 40
+	
+				war = no
+	
+				add_target_backers = {
+					c:MEX
+					c:MIS
+				}
+	
+				add_initiator_backers = {
+					c:WAH
+					c:MIL
+				}
+				
+				add_war_goal = {
+					holder = c:MIS
+					type = annex_country
+					target_country = C:MIL
+				}
+				add_war_goal = {
+					holder = C:MIL
+					type = annex_country
+					target_country = c:MIS
+				}
+			}
+		}
+		if = {
+			limit = { AND = {
+				NOT = { c:MIS = {	has_modifier = union_with_mexico } }
+				c:LOU = {	has_modifier = union_with_mexico }}  }
+				create_diplomatic_play = {
+	
+					name = mex
+					type = dp_humiliation
+		
+					target_country = c:MEX
+		
+					escalation = 40
+		
+					war = no
+		
+					add_target_backers = {
+						c:MEX
+						c:LOU
+					}
+		
+					add_initiator_backers = {
+						c:WAH
+						c:LOL
+					}
+					
+					add_war_goal = {
+						holder = c:LOU
+						type = annex_country
+						target_country = C:LOL
+					}
+					add_war_goal = {
+						holder = C:LOL
+						type = annex_country
+						target_country = c:LOU
+					}
+				}
+			}
+	
+
+	}
+
+	option = {
+		name = dtnw_sick_us.4.a
+		add_journal_entry = {
+			type = je_sick_us_mexcio
+		}
+	}
+}
+
+#force oilgarchy subject event
+dtnw_sick_us.5 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_oligarchy
+	}
+	
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+					any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								OR = {
+									has_law = law_type:law_oligarchy 
+									has_law = law_type:law_technocracy
+									has_law = law_type:law_autocracy
+									has_law = law_type:law_single_party_state
+									has_law = law_type:law_anarchy
+								}							
+							}
+					count > 2
+					}
+				}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
+
+#force land voting subject event
+dtnw_sick_us.6 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_landed_voting
+	}
+	
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+					any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								has_law = law_type:law_landed_voting						
+							}
+					count > 2
+					}
+				}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
+
+#force wealth voting subject event
+dtnw_sick_us.7 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_wealth_voting
+	}
+	
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+					any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								has_law = law_type:law_wealth_voting						
+							}
+					count > 2
+					}
+				}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
+
+#force equal voting subject event
+dtnw_sick_us.8 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_census_voting
+	}
+	
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+					any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								OR = {
+									has_law = law_type:law_census_voting
+									has_law = law_type:law_universal_suffrage	
+								}	
+							}
+					count > 2
+					}
+				}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
+
+#force ethno subject event
+dtnw_sick_us.9 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_ethnostate
+	}
+	
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+					any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								has_law = law_type:law_ethnostate	
+							}
+					count > 2
+					}
+				}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
+
+dtnw_sick_us.10 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_national_supremacy
+	}
+	
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+					any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								has_law = law_type:law_national_supremacy	
+							}
+					count > 2
+					}
+				}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
+
+dtnw_sick_us.11 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_racial_segregation
+	}
+	
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+					any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								has_law = law_type:law_racial_segregation	
+							}
+					count > 2
+					}
+				}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
+
+
+dtnw_sick_us.12 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_cultural_exclusion
+	}
+	
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+					any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								or = {
+									has_law = law_type:law_cultural_exclusion
+									has_law = law_type:law_multicultural
+								}						
+							}
+					count > 2
+					}
+				}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
+
+#econ
+dtnw_sick_us.13 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_agrarianism
+	}
+	
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+					any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								or = {
+									has_law = law_type:law_agrarianism
+									has_law = law_type:law_traditionalism
+									has_law = law_type:law_industry_banned
+								}							
+							}
+					count > 2
+					}
+				}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
+
+dtnw_sick_us.14 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_interventionism
+	}
+	
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+					any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								has_law = law_type:law_interventionism						
+							}
+					count > 2
+					}
+				}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
+
+dtnw_sick_us.15 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_laissez_faire
+	}
+	
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+					any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								has_law = law_type:law_laissez_faire
+							}
+					count > 2
+					}
+				}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
+
+dtnw_sick_us.16 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_serfdom
+	}
+	
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+					any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								has_law = law_type:law_serfdom
+							}
+					count > 2
+					}
+				}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
+
+dtnw_sick_us.17 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_tenant_farmers
+	}
+	
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+					any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								has_law = law_type:law_tenant_farmers
+							}
+					count > 2
+					}
+				}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
+
+dtnw_sick_us.18 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_commercialized_agriculture
+	}
+	
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+					any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								has_law = law_type:law_commercialized_agriculture
+							}
+					count > 2
+					}
+				}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
+
+dtnw_sick_us.19 = {
+	type = country_event
+	placement = root
+	title = dtnw_sick_us.2.t
+	desc = dtnw_sick_us.2.d
+	flavor = dtnw_sick_us.2.f
+
+	event_image = {
+		video = "gfx/event_pictures/southamerica_aristocrats.bk2"
+	}
+
+	duration = 1
+
+	trigger = {
+
+	}
+
+	immediate = {
+
+	}
+
+	option = {
+		name = dtnw_sick_us.2.a
+		default_option = yes
+		activate_law = law_type:law_homesteading
+	}
+	
+	option = {
+		name = dtnw_sick_us.2.b
+		#starts civil_war stuff
+		ai_chance = {
+			modifier = {
+				trigger = {
+					top_overlord = {
+					any_subject_or_below = {
+						OR = {
+							country_has_primary_culture = cu:yankee
+							country_has_primary_culture = cu:dixie
+							}
+							not = {
+								has_law = law_type:law_homesteading
+							}
+					count > 2
+					}
+				}
+				}
+				add = 50
+				#ai will do if there are at least 3
+			}
+			base = 0
+		}
+		add_modifier = {
+			name = civil_war_nation
+		}
+	}
+}
