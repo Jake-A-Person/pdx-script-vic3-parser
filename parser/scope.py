@@ -100,7 +100,7 @@ class Scope(object):
         #if it is the scope operator ({) change scope
         if self._script[self._index.val] == "{":
             self._index.val += 1
-            self._scopes.append(Scope(self._script,self._index,property_str))
+            self._go_to_next_scope(property_str)
             return
         else:
             #is a value so parse it
