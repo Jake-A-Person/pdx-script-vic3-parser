@@ -18,6 +18,6 @@ def __valid_operator(statement:Statement,operator:str) -> bool:
     return False
 
 def __valid_value(statement:Statement,value:str) -> bool:
-    if (value is None) or (statement.get_property() == value):
+    if (value is None) or (statement.get_value() == value):
         return True
     return False
