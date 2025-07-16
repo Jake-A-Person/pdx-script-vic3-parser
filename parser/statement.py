@@ -1,5 +1,6 @@
+from parser.command import Command
 
-class Statement(object):
+class Statement(Command):
     """
     Represents a pdx script statement.
     A statement is in the context of this library anything in the format:
@@ -9,22 +10,21 @@ class Statement(object):
 
     Is used by the Scope class
     """
-    _property: str
+    _name: str
     _value: str
 
-    def __init__(self, property_str: str, value_str: str, operator: str):
+    def __init__(self, name: str, value_str: str, operator: str):
         """
 
-        :param property_str: The property (left side) of the pdx script statement
-        :type property_str: str
+        :param name: The property (left side) of the pdx script statement
+        :type name: str
         :param value_str: The value (right side) of the pdx script statement
         :type value_str: str
         :param operator: The operator (sign in the middle) of the pdx script statement
         :type operator: str
         """
-        self._property = property_str
+        super().__init__(name, operator)
         self._value = value_str
-        self._operator = operator
 
     def get_property(self) -> str:
         """
@@ -32,15 +32,7 @@ class Statement(object):
         :return: The property (left side) of the pdx script statement
         :rtype: str
         """
-        return self._property
-
-    def get_value(self) -> str:
-        """
-
-        :return: The value (right side) of the pdx script statement
-        :rtype: str
-        """
-        return self._value
+        return self._name
 
     def set_property(self, property_str: str) -> None:
         """
@@ -48,7 +40,7 @@ class Statement(object):
         :param property_str: The property (left side) of the pdx script statement
         :type property_str: str
         """
-        self._property = property_str
+        self._name = property_str
 
     def set_value(self, value: str) -> None:
         """
@@ -66,20 +58,12 @@ class Statement(object):
         """
         self._operator = operator
 
-    def get_operator(self) -> str:
-        """
-
-        :return: The operator (sign in the middle) of the pdx script statement
-        :rtype: str
-        """
-        return self._operator
-
     def __eq__(self, other):
         #only compare with same type
         if not isinstance(other, Statement):
             return NotImplemented
         else:
-            return self._value == other._value and self._property == other._property and self._operator == other._operator
+            return self._value == other._value and self._name == other._name and self._operator == other._operator
 
     def __str__(self):
-        return f"{self._property} {self._operator} {self._value}"
+        return f"{self._name} {self._operator} {self._value}"

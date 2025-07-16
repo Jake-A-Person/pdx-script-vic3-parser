@@ -1,10 +1,11 @@
 from os import linesep as os_linesep
 
+from parser.command import Command
 from parser.statement import Statement
 from parser.int_wrap import IntWrap
 
 
-class Scope(object):
+class Scope(Command):
     """
     Represents a pdx script scope.
     A statement is in the context of this library anything in the format:
@@ -13,10 +14,12 @@ class Scope(object):
     The scope is closed by a }.
     A scope can contain any number of Statement objects and any number of Scope objects
     """
-    def __init__(self, script: str, index:IntWrap = None, name:str = "this"):
+    def __init__(self, script: str = "", name: str = "this", operator="=", index: IntWrap = None):
         """
         Parses the given script when the object is created and creates Scopes and statements based on the given script
 
+        :param operator:
+        :type operator:
         :param script: The pdx script to parse, must be LF
         :type script: str
         :param index: The index of the pdx script to parse will default to a new IntWrap(0)
@@ -24,10 +27,10 @@ class Scope(object):
         :param name: Name of this scope
         :type name: str
         """
+        super().__init__(name, operator)
         self._script = script
         #if no index is given then default to 0
         self._index = index if index is not None else IntWrap(0)
-        self._name = name
         self._statements = list()
         self._scopes = list()
         self.__parse_space_start_exp()
@@ -99,7 +102,7 @@ class Scope(object):
         #if it is the scope operator ({) change scope
         if self._script[self._index.val] == "{":
             self._index.val += 1
-            self._go_to_next_scope(property_str)
+            self._go_to_next_scope(property_str,operator)
             return
         else:
             #is a value so parse it
@@ -123,8 +126,8 @@ class Scope(object):
                     value += self._script[self._index.val]
                     self._index.val += 1
 
-    def _go_to_next_scope(self, next_scope_name:str):
-        self._scopes.append(Scope(self._script, self._index, next_scope_name))
+    def _go_to_next_scope(self, next_scope_name:str, next_scope_operator:str):
+        self._scopes.append(Scope(self._script, next_scope_name, next_scope_operator, self._index))
 
     def __check_for_comment(self):
         #if it is the start of a comment

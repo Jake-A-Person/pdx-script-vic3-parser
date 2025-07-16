@@ -9,7 +9,7 @@ class TestFindEqvScope(unittest.TestCase):
     script.close()
 
     def test_top_level_all_stat(self):
-        eqv_scope = Scope("",name = "je_sick_us")
+        eqv_scope = Scope("", name="je_sick_us")
         eqv_scope.add_statement(Statement("icon","\"gfx/interface/icons/event_icons/event_election.dds\"","="))
         eqv_scope.add_statement(Statement("group", "je_group_internal_affairs", "="))
         eqv_scope.add_statement(Statement("progressbar", "yes", "="))
@@ -17,17 +17,17 @@ class TestFindEqvScope(unittest.TestCase):
         target_scope = self._scope.get_scopes()[0]
         self.assertEqual(self._scope.find_eqv_scope(eqv_scope), target_scope)  # add assertion here
     def test_top_level_some_stat(self):
-        eqv_scope = Scope("",name = "je_sick_us")
+        eqv_scope = Scope("", name="je_sick_us")
         eqv_scope.add_statement(Statement("progressbar", "yes", "="))
         target_scope = self._scope.get_scopes()[0]
         self.assertEqual(self._scope.find_eqv_scope(eqv_scope), target_scope)  # add assertion here
     def test_top_level_second(self):
-        eqv_scope = Scope("",name = "je_sick_us_mexcio")
+        eqv_scope = Scope("", name="je_sick_us_mexcio")
         eqv_scope.add_statement(Statement("group", "je_group_internal_affairs", "="))
         target_scope = self._scope.get_scopes()[1]
         self.assertEqual(self._scope.find_eqv_scope(eqv_scope), target_scope)  # add assertion here
     def test_second_level(self):
-        eqv_scope = Scope("",name = "c:MIS")
+        eqv_scope = Scope("", name="c:MIS")
         eqv_scope.add_statement(Statement("remove_modifier", "union_with_mexico", "="))
         target_scope = self._scope.get_scopes()[1].get_scopes()[5].get_scopes()[3]
         self.assertEqual(self._scope.find_eqv_scope(eqv_scope), target_scope,str(eqv_scope) + "!= \n" + str(target_scope))
