@@ -144,7 +144,7 @@ class Scope(Command):
         """
         statements: list[Statement] = []
         for command in self._commands:
-            if type(command) == Statement:
+            if issubclass(type(command), Statement):
                 statements.append(command)
 
         return statements
@@ -165,7 +165,7 @@ class Scope(Command):
         """
         scopes: list[Scope] = []
         for command in self._commands:
-            if type(command) == Scope:
+            if issubclass(type(command),Scope):
                 scopes.append(command)
         return scopes
 
