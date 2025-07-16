@@ -228,9 +228,9 @@ class Scope(Command):
         :rtype: str
         """
         return_str:str = indent_char*indentation_level + self._name + " = {" + new_line_char
-        for stat in self._commands:
+        for stat in self.get_statements():
             return_str += (indentation_level+1)*indent_char + str(stat) + new_line_char
-        for scope in self._commands:
+        for scope in self.get_scopes():
             return_str += scope.to_pdx_script(indentation_level=indentation_level + 1) + new_line_char
         return return_str + indent_char*indentation_level + "}"
 
