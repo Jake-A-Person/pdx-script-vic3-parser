@@ -31,8 +31,8 @@ class Scope(Command):
         self._script = script
         #if no index is given then default to 0
         self._index = index if index is not None else IntWrap(0)
-        self._statements = list()
-        self._scopes = list()
+        self._commands = list()
+        self._commands = list()
         self.__parse_space_start_exp()
 
     def __parse_space_start_exp(self):
@@ -113,21 +113,21 @@ class Scope(Command):
                 if self._script[self._index.val] == " " or self._script[self._index.val] == "\n" or self._script[self._index.val] == "\t":
                     #create a new statement using the property and value parsed and it to the list fo statements
                     stat = Statement(property_str,value,operator)
-                    self._statements.append(stat)
+                    self._commands.append(stat)
                     self._index.val += 1
                     # go back to parse_start_exp which goes back to parse_space_start_exp
                     return
                 #if it is closing the current scope
                 if self._script[self._index.val] == "}":
                     stat = Statement(property_str,value,operator)
-                    self._statements.append(stat)
+                    self._commands.append(stat)
                     return
                 else:
                     value += self._script[self._index.val]
                     self._index.val += 1
 
     def _go_to_next_scope(self, next_scope_name:str, next_scope_operator:str):
-        self._scopes.append(Scope(self._script, next_scope_name, next_scope_operator, self._index))
+        self._commands.append(Scope(self._script, next_scope_name, next_scope_operator, self._index))
 
     def __check_for_comment(self):
         #if it is the start of a comment
@@ -142,7 +142,12 @@ class Scope(Command):
         :return: The list of statements in the current scope
         :rtype: list[Statement]
         """
-        return self._statements
+        statements: list[Statement] = []
+        for command in self._commands:
+            if type(command) == Statement:
+                statements.append(command)
+
+        return statements
 
     def get_name(self) -> str:
         """
@@ -158,7 +163,11 @@ class Scope(Command):
         :return: The list of scopes in the current scope
         :rtype: list[Scope]
         """
-        return self._scopes
+        scopes: list[Scope] = []
+        for command in self._commands:
+            if type(command) == Scope:
+                scopes.append(command)
+        return scopes
 
     def add_statement(self, stat: Statement):
         """
@@ -166,7 +175,7 @@ class Scope(Command):
         :param stat: The statement to add
         :type stat: Statement
         """
-        self._statements.append(stat)
+        self._commands.append(stat)
 
     def remove_statement(self, stat: Statement):
         """
@@ -175,7 +184,7 @@ class Scope(Command):
         :type stat: Statement
         :raises: ValueError
         """
-        self._scopes.remove(stat)
+        self._commands.remove(stat)
 
     def add_scope(self, scope):
         """
@@ -183,7 +192,7 @@ class Scope(Command):
         :param scope: The scope to add
         :type scope: Scope
         """
-        self._scopes.append(scope)
+        self._commands.append(scope)
 
     def remove_scope(self, scope):
         """
@@ -193,13 +202,13 @@ class Scope(Command):
         :raises: ValueError
         """
 
-        self._scopes.remove(scope)
+        self._commands.remove(scope)
 
     def find_eqv_scope(self, eqv_scope):
         if self._name == eqv_scope.get_name():
-            if len(eqv_scope.get_statements()) == 0 or all(stat in self._statements for stat in eqv_scope.get_statements()):
+            if len(eqv_scope.get_statements()) == 0 or all(stat in self._commands for stat in eqv_scope.get_statements()):
                 return self
-        for child_scope in self._scopes:
+        for child_scope in self._commands:
             return_val = child_scope.find_eqv_scope(eqv_scope)
             if return_val is not None:
                 return return_val
@@ -219,9 +228,9 @@ class Scope(Command):
         :rtype: str
         """
         return_str:str = indent_char*indentation_level + self._name + " = {" + new_line_char
-        for stat in self._statements:
+        for stat in self._commands:
             return_str += (indentation_level+1)*indent_char + str(stat) + new_line_char
-        for scope in self._scopes:
+        for scope in self._commands:
             return_str += scope.to_pdx_script(indentation_level=indentation_level + 1) + new_line_char
         return return_str + indent_char*indentation_level + "}"
 
@@ -229,7 +238,7 @@ class Scope(Command):
         if not isinstance(other, Scope):
             return NotImplemented
         else:
-            return self._name == other._name and self._scopes == other._scopes and self._statements == other._statements
+            return self._name == other._name and self._commands == other._commands and self._commands == other._commands
 
     def __str__(self):
         return self.to_pdx_script("   ",os_linesep)
