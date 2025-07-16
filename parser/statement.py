@@ -26,14 +26,6 @@ class Statement(Command):
         super().__init__(name, operator)
         self._value = value_str
 
-    def get_property(self) -> str:
-        """
-
-        :return: The property (left side) of the pdx script statement
-        :rtype: str
-        """
-        return self._name
-
     def set_property(self, property_str: str) -> None:
         """
 
@@ -41,6 +33,14 @@ class Statement(Command):
         :type property_str: str
         """
         self._name = property_str
+
+    def get_value(self) -> str:
+        """
+
+        :return: The value (right side) of the pdx script statement
+        :rtype: str
+        """
+        return self._value
 
     def set_value(self, value: str) -> None:
         """
