@@ -206,9 +206,9 @@ class Scope(Command):
 
     def find_eqv_scope(self, eqv_scope):
         if self._name == eqv_scope.get_name():
-            if len(eqv_scope.get_statements()) == 0 or all(stat in self._commands for stat in eqv_scope.get_statements()):
+            if len(eqv_scope.get_statements()) == 0 or all(stat in self.get_statements() for stat in eqv_scope.get_statements()):
                 return self
-        for child_scope in self._commands:
+        for child_scope in self.get_scopes():
             return_val = child_scope.find_eqv_scope(eqv_scope)
             if return_val is not None:
                 return return_val
