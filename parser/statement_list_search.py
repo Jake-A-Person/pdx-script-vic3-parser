@@ -8,7 +8,7 @@ def find_matching_statements(statement_list:list[Statement] ,property_str:str=No
     return return_val
 
 def __valid_property(statement:Statement,property_str:str) -> bool:
-    if (property_str is None) or (statement.get_property() == property_str):
+    if (property_str is None) or (statement.get_name() == property_str):
         return True
     return False
 
