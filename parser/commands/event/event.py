@@ -1,7 +1,7 @@
-from parser.scope import Scope
-from parser.int_wrap import IntWrap
-from parser.statement_list_search import find_matching_statements
-from parser.exceptions import PdxScriptSyntaxError
+from parser.commands.scope import Scope
+from parser.util.int_wrap import IntWrap
+from parser.util.util_statement import find_matching_statements
+from parser.util.exceptions import PdxScriptSyntaxError
 
 
 class Event(Scope):

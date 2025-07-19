@@ -1,6 +1,5 @@
 import unittest
-from parser.statement import *
-from parser.statement_list_search import find_matching_statements
+from parser.util.util_statement import *
 
 
 class TestStatementListSearch(unittest.TestCase):

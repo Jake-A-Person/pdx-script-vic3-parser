@@ -1,7 +1,7 @@
-from parser.scope import Scope
-from parser.int_wrap import IntWrap
-from parser.event.event import Event
-from parser.statement_list_search import find_matching_statements
+from parser.commands.scope import Scope
+from parser.util.int_wrap import IntWrap
+from parser.commands.event import Event
+from parser.util.util_statement import find_matching_statements
 
 class EventFile(Scope):
     def __init__(self, script: str = "", name: str = "this", operator="=", index: IntWrap = None):

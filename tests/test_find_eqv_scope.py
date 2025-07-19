@@ -1,6 +1,5 @@
 import unittest
-
-from parser.scope import *
+from parser.commands.scope import *
 
 class TestFindEqvScope(unittest.TestCase):
     _scope:Scope

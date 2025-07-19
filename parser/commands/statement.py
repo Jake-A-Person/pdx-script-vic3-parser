@@ -1,4 +1,4 @@
-from parser.command import Command
+from parser.commands.command import Command
 
 class Statement(Command):
     """

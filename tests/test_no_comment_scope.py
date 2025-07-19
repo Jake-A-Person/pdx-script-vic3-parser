@@ -1,8 +1,5 @@
 import unittest
-from parser.scope import *
-from parser.statement import *
-
-
+from parser.commands.scope import *
 
 class TestNoCommentScope(unittest.TestCase):
     scope1:Scope

@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC 
 class Command(ABC):
     def __init__(self, name: str, operator: str):
         self._name = name

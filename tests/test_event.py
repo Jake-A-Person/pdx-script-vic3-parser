@@ -1,7 +1,5 @@
-from parser.event.event_file import *
-from parser.event.event import *
-from parser.statement import *
-
+from parser.commands.statement import *
+from parser.commands.event.event_file import *
 import unittest
 
 class TestCommentScope(unittest.TestCase):
