@@ -1,6 +1,6 @@
 from parser.commands.scope import Scope
 from parser.util.int_wrap import IntWrap
-from parser.commands.event import Event
+from parser.commands.event.event import Event
 from parser.util.util_statement import find_matching_statements
 
 class EventFile(Scope):
