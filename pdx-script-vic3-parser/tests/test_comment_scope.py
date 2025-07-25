@@ -3,7 +3,7 @@ from parser.commands.scope import *
 
 class TestCommentScope(unittest.TestCase):
     _scope:Scope
-    script = open("../eg_scrip_files/50_sick_us_dtnw.txt", "r", encoding="utf-8-sig", newline="\n")
+    script = open("eg_scrip_files/50_sick_us_dtnw.txt", "r", encoding="utf-8-sig", newline="\n")
     _scope = Scope(script.read())
     script.close()
 

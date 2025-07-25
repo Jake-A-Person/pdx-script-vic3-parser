@@ -4,7 +4,7 @@ import unittest
 
 class TestCommentScope(unittest.TestCase):
     _scope:EventFile
-    script = open("../eg_scrip_files/dtnw_sick_us.txt", "r", encoding="utf-8-sig", newline="\n")
+    script = open("eg_scrip_files/dtnw_sick_us.txt", "r", encoding="utf-8-sig", newline="\n")
     _scope = EventFile(script.read())
     script.close()
 
