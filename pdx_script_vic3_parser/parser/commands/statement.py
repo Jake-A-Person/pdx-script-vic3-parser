@@ -65,5 +65,8 @@ class Statement(Command):
         else:
             return self._value == other._value and self._name == other._name and self._operator == other._operator
 
+    def to_pdx_script(self) -> str:
+        return self.__str__()
+
     def __str__(self):
         return f"{self._name} {self._operator} {self._value}"

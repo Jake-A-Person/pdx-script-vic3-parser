@@ -19,3 +19,6 @@ class Command(ABC):
         :rtype: str
         """
         return self._operator
+
+    def to_pdx_script(self) -> str:
+        pass
