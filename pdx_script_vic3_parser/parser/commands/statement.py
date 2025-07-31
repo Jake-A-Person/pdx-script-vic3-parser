@@ -1,4 +1,4 @@
-from parser.commands.command import Command
+from pdx_script_vic3_parser.parser.commands.command import Command
 
 class Statement(Command):
     """

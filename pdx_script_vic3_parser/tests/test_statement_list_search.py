@@ -1,5 +1,7 @@
 import unittest
-from parser.util.util_statement import *
+
+from pdx_script_vic3_parser.parser.commands.statement import *
+from pdx_script_vic3_parser.parser.util.util_statement import *
 
 
 class TestStatementListSearch(unittest.TestCase):

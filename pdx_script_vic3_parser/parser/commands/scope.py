@@ -1,8 +1,8 @@
 from os import linesep as os_linesep
 
-from parser.commands.command import *
-from parser.commands.statement import *
-from parser.util.int_wrap import IntWrap
+from pdx_script_vic3_parser.parser.commands.command import *
+from pdx_script_vic3_parser.parser.commands.statement import *
+from pdx_script_vic3_parser.parser.util.int_wrap import IntWrap
 
 
 class Scope(Command):

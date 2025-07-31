@@ -1,4 +1,4 @@
-from parser.commands.statement import Statement
+from pdx_script_vic3_parser.parser.commands.statement import Statement
 
 def find_matching_statements(statement_list:list[Statement] ,property_str:str=None,operator:str=None,value=None) -> list[Statement]:
     return_val:list[Statement] = list()

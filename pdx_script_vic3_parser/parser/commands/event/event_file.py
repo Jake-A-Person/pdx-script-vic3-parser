@@ -1,7 +1,7 @@
-from parser.commands.scope import Scope
-from parser.util.int_wrap import IntWrap
-from parser.commands.event.event import Event
-from parser.util.util_statement import find_matching_statements
+from pdx_script_vic3_parser.parser.commands.scope import Scope
+from pdx_script_vic3_parser.parser.util.int_wrap import IntWrap
+from pdx_script_vic3_parser.parser.commands.event.event import Event
+from pdx_script_vic3_parser.parser.util.util_statement import find_matching_statements
 
 class EventFile(Scope):
     def __init__(self, script: str = "", name: str = "this", operator="=", index: IntWrap = None):

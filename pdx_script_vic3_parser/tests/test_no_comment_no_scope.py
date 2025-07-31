@@ -1,5 +1,5 @@
 import unittest
-from parser.commands.scope import *
+from pdx_script_vic3_parser.parser.commands.scope import *
 
 
 class TestNoCommentNoScope(unittest.TestCase):

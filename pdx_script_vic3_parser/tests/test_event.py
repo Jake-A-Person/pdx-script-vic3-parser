@@ -1,5 +1,5 @@
-from parser.commands.statement import *
-from parser.commands.event.event_file import *
+from pdx_script_vic3_parser.parser.commands.statement import *
+from pdx_script_vic3_parser.parser.commands.event.event_file import *
 import unittest
 
 class TestCommentScope(unittest.TestCase):
