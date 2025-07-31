@@ -1,6 +1,6 @@
 from os import linesep as os_linesep
 
-from pdx_script_vic3_parser.parser.commands.command import *
+from pdx_script_vic3_parser.parser.commands.list.list_item import ListItem
 from pdx_script_vic3_parser.parser.commands.statement import *
 from pdx_script_vic3_parser.parser.util.int_wrap import IntWrap
 
@@ -70,6 +70,7 @@ class Scope(Command):
         #valid operators
         valid_single_op = ["<",">","="]
         valid_multi_op = ["<=",">=","?="]
+        valid_space = [" ", "\t", "\n"]
         #looping to the assignment operator from the left
         while self._index.val < len(self._script):
             self.__check_for_comment()
@@ -86,6 +87,10 @@ class Scope(Command):
                 self._index.val += 1
                 #exit loop
                 break
+            #deals with a list item
+            elif not(self._script[self._index.val] in valid_space):
+                self._commands.append(ListItem(property_str))
+                return
             self._index.val += 1
         # looping to the value or scope operator ({) from the operator
         while self._index.val < len(self._script):
