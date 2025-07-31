@@ -228,10 +228,11 @@ class Scope(Command):
         :rtype: str
         """
         return_str:str = indent_char*indentation_level + self._name + " = {" + new_line_char
-        for stat in self.get_statements():
-            return_str += (indentation_level+1)*indent_char + str(stat) + new_line_char
-        for scope in self.get_scopes():
-            return_str += scope.to_pdx_script(indentation_level=indentation_level + 1) + new_line_char
+        for command in self._commands:
+            if type(command) == Scope:
+                return_str += command.to_pdx_script(indentation_level=indentation_level + 1) + new_line_char
+            else:
+                return_str += (indentation_level+1)*indent_char + command.to_pdx_script() + new_line_char
         return return_str + indent_char*indentation_level + "}"
 
     def __eq__(self, other):
