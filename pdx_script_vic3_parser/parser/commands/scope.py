@@ -209,6 +209,9 @@ class Scope(Command):
 
         self._commands.remove(scope)
 
+    def add_command(self, command:Command, index:int):
+        self._commands.insert(index, command)
+
     def find_eqv_scope(self, eqv_scope):
         if self._name == eqv_scope.get_name():
             if len(eqv_scope.get_statements()) == 0 or all(stat in self.get_statements() for stat in eqv_scope.get_statements()):
