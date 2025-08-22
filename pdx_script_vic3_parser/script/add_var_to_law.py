@@ -3,12 +3,22 @@ import pdx_script_vic3_parser.parser.commands.statement as stat
 import pdx_script_vic3_parser.parser.util.util_statement as util_stat
 import os
 
+def gen_loc_for_sb(sb_name: str, law_group_str: str) -> str:
+    law_group_space = law_group_str.replace("_"," ").title()
+    return_val = sb_name + ': "1"'# + law_group_space + '"'
+    return return_val
+def gen_loc_desc_for_sb(sb_name: str, law_group_str: str) -> str:
+    law_group_space = law_group_str.replace("_"," ").title()
+    return_val = sb_name + '_desc : "Start a vote in if our current ' + law_group_space + ' law should be federation wide"'
+    return return_val
+
 input_dir = input("Path of directory with the files to make a modified copy of")
 output_dir = input("Path of directory of the mod to place the modified copy")
 
 pdx_law_new_files: dict[str,list[scope.Scope]] = dict()
 pdx_scripted_button_file: list[scope.Scope] = []
 pdx_sb_var_check: scope.Scope = scope.Scope()
+pdx_sb_loc: str = "l_english:\n"
 
 for filename in os.listdir(input_dir):
     #is a vick3 file and is not caste hegemony law as that is not applicable
@@ -67,6 +77,10 @@ for filename in os.listdir(input_dir):
             new_scripted_button.add_command(possible_scope,0)
             pdx_scripted_button_file.append(new_scripted_button)
 
+            pdx_sb_loc += " " + gen_loc_for_sb(new_scripted_button_name,law_group) + "\n"
+            pdx_sb_loc += " " + gen_loc_desc_for_sb(new_scripted_button_name,law_group) + "\n"
+
+
             #cheact an if sttament to check for sb
             if_scope = scope.Scope(name = "if")
             limit_Scope = scope.Scope(name = "limit")
@@ -75,16 +89,20 @@ for filename in os.listdir(input_dir):
             if_scope.add_command(stat.Statement("set_variable",var_name,"="),1)
             pdx_sb_var_check.add_scope(if_scope)
 
+def out_to_file_sb_loc():
+    f = open(os.path.join(output_dir, "localization","english","ifp_scripted_buttons_enact_l_english.yml"), 'w',encoding="utf-8-sig", newline="\n")
+    f.write(pdx_sb_loc)
 
+out_to_file_sb_loc()
 
 
 # # print(pdx_law_new_files[0][3])
 # print(str(pdx_scripted_button_file[0]))
-f = open(os.path.join(output_dir, "common","scripted_buttons","test1.txt"), 'w',encoding="utf-8-sig", newline="\n")
-for sb in pdx_scripted_button_file:
-    f.write(str(sb))
-    f.write("\n")
-f.close()
+# f = open(os.path.join(output_dir, "common","scripted_buttons","test1.txt"), 'w',encoding="utf-8-sig", newline="\n")
+# for sb in pdx_scripted_button_file:
+#     f.write(str(sb))
+#     f.write("\n")
+# f.close()
 # for file_name, law_file in pdx_law_new_files.items():
 #     f = open(os.path.join(output_dir,"common","laws", file_name ), 'w', encoding="utf-8-sig",newline="\n")
 #     for law in law_file:
