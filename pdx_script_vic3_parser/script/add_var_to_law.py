@@ -9,7 +9,7 @@ def gen_loc_for_sb(sb_name: str, law_group_str: str) -> str:
     return return_val
 def gen_loc_desc_for_sb(sb_name: str, law_group_str: str) -> str:
     law_group_space = law_group_str.replace("_"," ").title()
-    return_val = sb_name + '_desc : "Start a vote in if our current ' + law_group_space + ' law should be federation wide"'
+    return_val = sb_name + '_desc: "Start a vote in if our current ' + law_group_space + ' law should be federation wide"'
     return return_val
 
 input_dir = input("Path of directory with the files to make a modified copy of")
